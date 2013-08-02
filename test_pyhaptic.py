@@ -32,14 +32,21 @@ def find_comm_port():
     comm_choice = raw_input("\nPlease choose the full path to the comm port that the haptic controller is connected to:") 
     return comm_choice
 
-def function_zero():
+
+def button_handler(option=-1):
+
+	#negative 1 is a default value that will cause the function to do nothing.  I like having default values, but that is just my preference.
+	
+	if option == 0:
+
     print "running zero"
     for x in xrange(two_d_display.qry_number_motors()):
         two_d_display.vibrate(x,0,0,1)
         time.sleep(.1)
     print "completed zero"
 
-def function_one():
+	if option == 1:
+
     print "running one"
     number = two_d_display.qry_number_motors()
     for x in xrange(number):
@@ -50,72 +57,30 @@ def function_one():
         time.sleep(.1)
     print "completed one"
 
-def function_two():
+	if option == 2:
     print "running two"
     num_motors = two_d_display.qry_number_motors()
-    for x in xrange(num_motors):
-        if x % 8 == 0:
-            two_d_display.vibrate(x,0,0,1)
-    time.sleep(.5)
-    for x in xrange(num_motors):
-        if x % 8 == 1:
-            two_d_display.vibrate(x,0,0,1)
-    time.sleep(.5)
-    for x in xrange(num_motors):
-        if x % 8 == 2:
-            two_d_display.vibrate(x,0,0,1)
-    time.sleep(.5)
-    for x in xrange(num_motors):
-        if x % 8 == 3:
-            two_d_display.vibrate(x,0,0,1)
-    time.sleep(.5)
-    for x in xrange(num_motors):
-        if x % 8 == 4:
-            two_d_display.vibrate(x,0,0,1)
-    time.sleep(.5)
-    for x in xrange(num_motors):
-        if x % 8 == 5:
-            two_d_display.vibrate(x,0,0,1)
-    time.sleep(.5)
-    for x in xrange(num_motors):
-        if x % 8 == 6:
-            two_d_display.vibrate(x,0,0,1)
-    time.sleep(.5)
-    for x in xrange(num_motors):
-        if x % 8 == 7:
-            two_d_display.vibrate(x,0,0,1)
-    time.sleep(1)
-    # And back the other direction.
-    for x in xrange(num_motors):
-        if x % 8 == 6:
-            two_d_display.vibrate(x,0,0,1)
-    time.sleep(.5)
-    for x in xrange(num_motors):
-        if x % 8 == 5:
-            two_d_display.vibrate(x,0,0,1)
-    time.sleep(.5)
-    for x in xrange(num_motors):
-        if x % 8 == 4:
-            two_d_display.vibrate(x,0,0,1)
-    time.sleep(.5)
-    for x in xrange(num_motors):
-        if x % 8 == 3:
-            two_d_display.vibrate(x,0,0,1)
-    time.sleep(.5)
-    for x in xrange(num_motors):
-        if x % 8 == 2:
-            two_d_display.vibrate(x,0,0,1)
-    time.sleep(.5)
-    for x in xrange(num_motors):
-        if x % 8 == 1:
-            two_d_display.vibrate(x,0,0,1)
-    time.sleep(.5)
-    for x in xrange(num_motors):
-        if x % 8 == 0:
-            two_d_display.vibrate(x,0,0,1)
+
+		#I'm not sure what you're doing here, but I think this accomplishes the same thing in a much cleaner way.
+		
+		for i in range(0,8):
+			for x in range(0,num_motors):
+				if x % i == i:
+					two_d_display.vibrate(x,0,0,1)
+			time.sleep(.5)
+
+		time.sleep(.5)
+
+		#now go the other way
+
+		for i in range(7,-1,-1):
+			for x in range(0,num_motors):
+				if x % i == i:
+					two_d_display.vibrate(x,0,0,1)
+			time.sleep(.5)
     print "completed two"
 
-def function_three():
+	if option == 3:
     print "running three"
     num_motors = two_d_display.qry_number_motors()
     for x in xrange(num_motors):
@@ -123,27 +88,27 @@ def function_three():
         time.sleep(.1)
     print "completed three"
 
-def function_four():
+	if option == 4:
     print "running four"
     print "completed four"
 
-def function_five():
+	if option == 5:
     print "running five"
     print "completed five"
 
-def function_six():
+	if option == 6:
     print "running six"
     print "completed six"
 
-def function_seven():
+	if option == 7:
     print "running seven"
     print "completed seven"
 
-def function_eight():
+	if option == 8:
     print "running eight"
     print "completed eight"
 
-def function_nine():
+	if option == 9:
     print "running nine"
     print "completed nine"
 
@@ -161,25 +126,8 @@ if __name__ == '__main__':
     while True:
         comm_choice = sys.stdin.read(1)
         sys.stdin.read(1) #dump the newline char
-        if comm_choice == "0":
-            function_zero()
-        elif comm_choice == "1":
-            function_one()
-        elif comm_choice == "2":
-            function_two()
-        elif comm_choice == "3":
-            function_three()
-        elif comm_choice == "4":
-            function_four()
-        elif comm_choice == "5":
-            function_five()
-        elif comm_choice == "6":
-            function_six()
-        elif comm_choice == "7":
-            function_seven()
-        elif comm_choice == "8":
-            function_eight()
-        elif comm_choice == "9":
-            function_nine()
+
+				if int(comm_choice) in range(0,10):
+					button_handler(int(comm_choice))
         else:
             sys.exit(0)
